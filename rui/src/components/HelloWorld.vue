@@ -79,7 +79,6 @@ export default {
           },
 
         }).then(action => {
-          console.log(action)
           this.$message({
             type: 'info',
             message: '温馨提示: ' + "您已退出登录"

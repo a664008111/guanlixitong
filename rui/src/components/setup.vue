@@ -1,7 +1,9 @@
 <template>
     <div class="setup">
-        <input type="file" accept="image/*" @change="changepic">
-        <img :src="imageUrl" alt="">
+        <input type="file" accept="image/*" @change="chooseImg" />
+        <canvas ref="imgPreview" height="0" width="0"></canvas>
+        <button @click="uploadImg">提交图片</button>
+        <p><img :src="base64"></p>
     </div>
 </template>
 
@@ -10,31 +12,47 @@ import axios from "axios"
 export default {
     data(){
         return{
-            imageUrl: ''
+            imgUrlFromServer: '',
+            base64: ''
         }
     },
     methods:{
-        init(){
-            axios.get("http://169.254.115.222:8098/he",{
-                // params:{
-                //     setupimg:this.imageUrl
-                // }
-            }).then(res=>{
-                console.log(res)
+        uploadImg(){
+           axios.post("http://169.254.115.222:8098/setups",{
+                  setupimg:this.base64
+              }).then(res=>{
+                  console.log(res)
+                // this.imgUrlFromServer=res.data.setupimg
             })
-    },
-    changepic(e){
-        console.log(this)
-        if(event.target.files.length>0){
-		this.imageUrl=e.target.files[0];  //提交的图片
-		this.$conf.getBase64(e.target,(url)=>{
-			this.imgDataUrl = 'data:image/png;base64,'+url;   //显示的图片
-		}); 
-	}
-    }
+        },
+        chooseImg (event) {
+            let file = event.target.files[0]
+            if(!/image\/\w+/.test(file.type)){     
+                alert("请确保文件为图像类型");   
+                return false;   
+            }  
+            let reader = new FileReader()
+            let img = new Image()
+            console.log(img,file)
+            reader.readAsDataURL(file)
+            reader.onloadend = (e) => {
+                img.src = e.target.result    
+                this.base64 = reader.result
+            }
+            let canvas = this.$refs['imgPreview']
+            let context = canvas.getContext('2d')
+            img.onload = () => {
+                img.width = 100
+                img.height = 100
+                canvas.width = 100
+                canvas.height = 100
+                context.clearRect(0, 0, 100, 100)
+                context.drawImage(img, 0, 0, 100, 100)
+            }
+        }
     },
     mounted(){
-        this.init()
+
     }
 }
 </script>
@@ -67,5 +85,12 @@ export default {
     width: 178px;
     height: 178px;
     display: block;
+  }
+  p{
+      width: 100px;
+      height: 100px;
+  }
+  p img{
+      width: 100%;
   }
 </style>

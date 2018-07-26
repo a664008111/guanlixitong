@@ -3,7 +3,8 @@ var app=express();
 var mysql=require('mysql');
 var path=require("path");
 var bo=require("body-parser");
-var bodys=bo.urlencoded({extended:false})
+var fs=require("fs")
+var bodys=bo.urlencoded({limit: '100mb',extended:true})
 var a=mysql.createConnection({
     host:"localhost",
     port:3306,
@@ -13,6 +14,10 @@ var a=mysql.createConnection({
 })
 app.all("*",(req,res,next)=>{
     res.header('Access-Control-Allow-Origin', '*');
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+    res.header("X-Powered-By",' 3.2.1')
+    res.header("Content-Type", "application/json;charset=utf-8");
     next()
 })
 app.get("/login",function(req,res){
@@ -22,7 +27,7 @@ app.get("/login",function(req,res){
         }
         else{
             if(result.length>0){
-                res.send({code:2,mgs:"登录成功"})
+                res.send({code:2,mgs:result})
             }
             else{
                 res.send({code:0,mgs:"您的帐户或密码错误！！！"})          
@@ -85,14 +90,13 @@ app.get("/srcs",function(req,res){
         }
         else{
             if(result.length>0){
-                console.log(result)
-                res.send({code:2,mgs:result})
+                res.send({code:2,mgs:result})   
             }
         }
     })
 })
-app.get("/setups",function(req,res){
-    a.query("insert into user(setupimg) values(?)",[req.query.setupimg],function(err,result){
+app.post("/setups",bodys,function(req,res){
+    a.query("insert into user(setupimg) values(?)",[req.body.setupimg],function(err,result){
         if(err){
             res.send({code:1,mgs:"服务器出现错误"})
         }

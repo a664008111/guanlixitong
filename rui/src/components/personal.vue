@@ -25,7 +25,6 @@ export default {
             this.autoplay="aotoplay"
             axios.get("http://169.254.115.222:8098/userimg").then(res=>{
                 this.userimg=res.data.mgs
-                console.log(this.userimg)
             })
         },
         show(){

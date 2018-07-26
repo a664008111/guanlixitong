@@ -2,7 +2,7 @@
   <div class="shouye">
       <div class="container">
           <div class="di">
-          <video id="video" controls="controls" src="http://vali-dns.cp31.ott.cibntv.net/677252066F43B7178BD6E4B63/03000B010059E9984F1089011BA6A987E388D6-5029-1F24-48F6-967B214E58DE.mp4?ccode=0502&duration=142&expire=18000&psid=ce1af93bb36e22d93870c20b16c999ff&sp=&ups_client_netip=72f9d292&ups_ts=1532484639&ups_userid=&utid=fhLDE%2BrR0EwCAd6AqV1YfNBz&vid=XMzA5Nzk1MTMzNg%3D%3D&vkey=B9b69eb2beaa61de3d05b08ec4b7536dd&s=7edea84a006911e59e2a" ref="video">
+          <video id="video" controls="controls" src="http://27.221.83.132/6573530CFEA3182AB7774632F2/0300080100596353681C4207F4CE631064491B-E0B3-ECFE-B10E-6AF411F23F75.mp4?ccode=0502&duration=221&expire=18000&psid=707440b73ffeb896dadee5460dc5aeb1&sp=&ups_client_netip=dddd9d4a&ups_ts=1532592462&ups_userid=461649567&utid=fhLDE%2BrR0EwCAd6AqV1YfNBz&vid=XMjg4MTYzNjMyMA%3D%3D&vkey=B0f1b0555297668555e8fbc0aed5d9483" ref="video">
           </video>
           <span @click="you" class="sp" id="sp1"><i class="el-icon-arrow-right" title="下一曲"></i></span>
           <span @click="zuo" class="sp" id="sp2"><i class="el-icon-arrow-left" title="上一曲"></i></span>
@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import './video.js'
 import axios from 'axios'
 export default {
     data(){

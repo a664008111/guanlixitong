@@ -43,7 +43,8 @@ export default {
                   pass:this.pass
                 }
               }).then(res=>{
-                    this.$alert(res.data.mgs, {
+                console.log(res)
+                    this.$alert("登录成功", {
                       confirmButtonText: '确定',
                   }).then(action => {
                       this.$message({
